@@ -85,7 +85,8 @@
 (defn write-as-json
   "json instead of csv for number types"
   [map out-path]
-  (spit out-path (json/write-str map)))
+  (spit out-path (json/write-str map))
+  map)
 
 
 (defn string->double [str]
@@ -94,10 +95,17 @@
     ""))
 
 
+(defn generate-message
+  [countries]
+  (str "Success: " (count countries) " countries"))
+
+
 (defn transform-data [in-path out-path]
   (-> (read-csv-as-maps in-path)
       (select-columns columns-to-use)
       (select-europe)
       (cast-columns double-columns string->double)
       (select-latest-valid-data-per-country)
-      (write-as-json out-path)))
+      (write-as-json out-path)
+      (generate-message)
+      (println)))

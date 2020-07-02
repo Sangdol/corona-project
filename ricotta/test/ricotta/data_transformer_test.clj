@@ -37,11 +37,11 @@
 
 
 (deftest is-valid-test
-  (is (is-valid {:new_cases 1} [0 0 0]))
-  (is (is-valid {:new_cases 100} [0 0 0]))
-  (is (is-valid {:new_cases 0} [10 0 0]))
-  (is (not (is-valid {:new_cases 0} [100 0 0])))
-  (is (not (is-valid {:new_cases 0} [10 11 12 0 0 20 30]))))
+  (is (is-valid 1 [0 0 0]))
+  (is (is-valid 100 [0 0 0]))
+  (is (is-valid 0 [10 0 0]))
+  (is (not (is-valid 0 [100 0 0])))
+  (is (not (is-valid 0 [10 11 12 0 0 20 30]))))
 
 
 (deftest select-latest-valid-data-of-country-test
@@ -106,3 +106,7 @@
   (is (= 1.0 (string->double "1")))
   (is (= "" (string->double ""))))
 
+
+(deftest generate-message-test
+  (is (= "Success: 3 countries"
+         (generate-message [{} {} {}]))))
