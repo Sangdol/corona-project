@@ -91,5 +91,7 @@
             {:date "2020-06-27" :location "a" :new_cases 0}]))))
 
 
-
+(deftest string->double-test
+  (is (= 1.0 (string->double "1")))
+  (is (= "" (string->double ""))))
 

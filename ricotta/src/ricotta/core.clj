@@ -7,6 +7,7 @@
     (let [in-path (nth args 0)
           out-path (nth args 1)]
       (do
+        (print in-path out-path)
         (transform-data in-path out-path)
         (generate-ui)))
     (throw (Exception. "A path to the csv file, please."))))

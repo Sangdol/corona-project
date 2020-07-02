@@ -1,12 +1,16 @@
 (ns ricotta.data-transformer
-  (:require [clojure.data.csv :as csv]
+  (:require [clojure.data.json :as json]
+            [clojure.data.csv :as csv]
             [clojure.java.io :as io]))
 
 
 (def europe "Europe")
-(def columns [])
-(def double-columns [])
-(def long-columns [])
+(def columns-to-use '(:continent :location :date
+                       :total_cases :new_cases
+                       :total_cases_per_million :new_cases_per_million
+                       :population))
+(def double-columns [:total_cases_per_million :new_cases_per_million
+                     :total_cases :new_cases :population])
 
 
 (defn read-csv-as-maps [in-path]
@@ -32,7 +36,9 @@
 
 
 (defn cast-columns [table columns f]
-  (map (fn [row] (update-keys row columns f))
+  "Type cast using f."
+  (map (fn [row]
+           (update-keys row columns f))
        table))
 
 
@@ -72,14 +78,22 @@
     (map select-latest-valid-data-of-country)))
 
 
-(defn write-as-csv [table out-path])
+(defn write-as-json
+  "json instead of csv for number types"
+  [map out-path]
+  (spit out-path (json/write-str map)))
+
+
+(defn string->double [str]
+  (if (not-empty str)
+    (Double/parseDouble str)
+    ""))
 
 
 (defn transform-data [in-path out-path]
   (-> (read-csv-as-maps in-path)
-      (select-columns columns)
+      (select-columns columns-to-use)
       (select-europe)
-      (cast-columns double-columns #(Double/parseDouble %))
-      (cast-columns long-columns #(Long/parseLong %))
+      (cast-columns double-columns string->double)
       (select-latest-valid-data-per-country)
-      (write-as-csv out-path)))
+      (write-as-json out-path)))
