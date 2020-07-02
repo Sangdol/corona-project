@@ -1,12 +1,12 @@
 (ns ricotta.core
-  (:require [clojure.data.csv :as csv]
-            [clojure.java.io :as io])
   (:use [ricotta.data-transformer :only [transform-data]]
         [ricotta.ui-generator :only [generate-ui]]))
 
 (defn -main [& args]
   (if-not (empty? args)
-    (do
-      (transform-data (nth args 0))
-      (generate-ui))
+    (let [in-path (nth args 0)
+          out-path (nth args 1)]
+      (do
+        (transform-data in-path out-path)
+        (generate-ui)))
     (throw (Exception. "A path to the csv file, please."))))

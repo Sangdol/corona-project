@@ -1,3 +1,3 @@
 (ns ricotta.ui-generator)
 
-(defn generate-ui)
+(defn generate-ui [])
