@@ -1,12 +1,17 @@
 (ns ricotta.core
   (:use [ricotta.data-transformer :only [transform-data]]
-        [ricotta.ui-generator :only [generate-ui]]))
+        [ricotta.ui-generator :only [generate-ui]]
+        [ricotta.config :only [config]]))
 
 (defn -main [& args]
   (if-not (empty? args)
-    (let [in-path (nth args 0)
-          out-path (nth args 1)]
+    (let [env (nth args 0)
+          config (config env)]
       (do
-        (transform-data in-path out-path)
-        (generate-ui "" "")))
-    (throw (Exception. "Paths to the input and output files, please."))))
+        (transform-data
+          (:input-csv-path config)
+          (:output-json-path config))
+        (generate-ui
+          (:js-template-path config)
+          (:js-output-path config))))
+    (throw (Exception. "Env is needed - local or prod?"))))
