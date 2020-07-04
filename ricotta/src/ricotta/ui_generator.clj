@@ -1,20 +1,19 @@
-(ns ricotta.ui-generator)
+(ns ricotta.ui-generator
+  (:require [clojure.string :as str]))
 
-(defn interpolate [template data])
+(defn interpolate [template data]
+  (str/replace template "{{data}}" data))
 
+(defn generate-message [output-path]
+  (str "Successfully generated: " output-path))
 
-(defn read-template [template-path])
-
-
-(defn read-countries-data [data-path])
-
-
-(defn write-html [html])
-
-
-(defn generate-ui [template-path data-path]
+(defn generate-ui [template-path data-path output-path]
   (->>
     (interpolate
-      (read-template template-path)
-      (read-countries-data data-path))
-    (write-html)))
+      (slurp template-path)
+      (slurp data-path))
+    (spit output-path))
+  (->>
+    (generate-message output-path)
+    (println)))
+

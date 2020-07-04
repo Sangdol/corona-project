@@ -13,5 +13,6 @@
           (:output-json-path config))
         (generate-ui
           (:js-template-path config)
+          (:output-json-path config)
           (:js-output-path config))))
     (throw (Exception. "Env is needed - local or prod?"))))
