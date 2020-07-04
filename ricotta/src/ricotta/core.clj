@@ -8,5 +8,5 @@
           out-path (nth args 1)]
       (do
         (transform-data in-path out-path)
-        (generate-ui)))
+        (generate-ui "" "")))
     (throw (Exception. "Paths to the input and output files, please."))))
