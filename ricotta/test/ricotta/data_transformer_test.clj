@@ -108,5 +108,5 @@
 
 
 (deftest generate-message-test
-  (is (= "Success: 3 countries"
-         (generate-message [{} {} {}]))))
+  (is (= "Success (3 countries): /file/path"
+         (generate-message [{} {} {}] "/file/path"))))

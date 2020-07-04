@@ -96,8 +96,8 @@
 
 
 (defn generate-message
-  [countries]
-  (str "Success: " (count countries) " countries"))
+  [countries out-path]
+  (str "Success (" (count countries) " countries): " out-path))
 
 
 (defn transform-data [in-path out-path]
@@ -107,5 +107,5 @@
       (cast-columns double-columns string->double)
       (select-latest-valid-data-per-country)
       (write-as-json out-path)
-      (generate-message)
+      (generate-message out-path)
       (println)))
