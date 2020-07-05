@@ -6,8 +6,8 @@
 (def common
   {:input-csv-path   (str project-root "/data/owid-covid-data.csv")
    :output-json-path (str project-root "/data/europe-data.csv")
-   :js-template-path (str project-root "/ricotta/resources/src/ricotta-src.js")
-   :js-output-path   (str project-root "/ricotta/resources/src/dist/ricotta.js")})
+   :js-template-path (str project-root "/ricotta/resources/web/ricotta-milk.js")
+   :js-output-path   (str project-root "/ricotta/resources/web/dist/ricotta-cheese.js")})
 
 (def local {})
 
