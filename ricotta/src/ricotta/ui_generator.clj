@@ -5,7 +5,7 @@
   (str/replace template "{{data}}" data))
 
 (defn generate-message [output-path]
-  (str "Successfully generated: " output-path))
+  (str "Success: " output-path))
 
 (defn generate-ui [template-path data-path output-path]
   (->>
