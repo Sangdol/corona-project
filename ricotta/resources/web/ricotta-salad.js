@@ -25,7 +25,7 @@ tabledata.forEach((country) => {
   country.populationShort = abbreviateNumber(country.population);
 });
 
-const table = new Tabulator("#container", {
+const table = new Tabulator("#table", {
     data: tabledata,
     layout: "fitColumns",
     initialSort:[
