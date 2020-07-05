@@ -16,6 +16,11 @@ function abbreviateNumber(value) {
     return newValue;
 }
 
+// https://stackoverflow.com/a/2901298/524588
+function numberWithCommasFormatter(cell, formatterParams, onRendered) {
+    return cell.getValue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 tabledata.forEach((country) => {
   country.populationShort = abbreviateNumber(country.population);
 });
@@ -23,13 +28,17 @@ tabledata.forEach((country) => {
 const table = new Tabulator("#container", {
     data: tabledata,
     layout: "fitColumns",
+    initialSort:[
+        {column:"total_cases", dir:"desc"}, //then sort by this second
+        {column:"new_cases", dir:"desc"}, //sort by this first
+    ],
     columns: [
-        {title: "Country", field: "location"},
+        {title: "Country", field: "location", widthGrow: 4},
         // {title: "Date", field: "date"},
-        {title: "Total", field: "total_cases"},
-        {title: "New", field: "new_cases"},
+        {title: "Total", field: "total_cases", widthGrow: 3, formatter: numberWithCommasFormatter},
+        {title: "New", field: "new_cases", widthGrow: 2, formatter: numberWithCommasFormatter},
         // {title: "Total/M", field: "total_cases_per_million"},
         // {title: "New/M", field: "new_cases_per_million"},
-        {title: "POP", field: "populationShort"},
+        // {title: "POP", field: "populationShort"},
     ],
 });
