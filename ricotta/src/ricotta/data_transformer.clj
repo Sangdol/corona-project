@@ -82,6 +82,14 @@
     (map select-latest-valid-data-of-country)))
 
 
+(defn create-data-with-timestamp [countries]
+  {:countries countries
+   :date      (->
+                (map :date countries)
+                sort
+                last)})
+
+
 (defn write-as-json
   "json instead of csv for number types"
   [map out-path]
@@ -100,12 +108,14 @@
   (str "Success (" (count countries) " countries): " out-path))
 
 
+
 (defn transform-data [in-path out-path]
   (-> (read-csv-as-maps in-path)
       (select-columns columns-to-use)
       (select-europe)
       (cast-columns double-columns string->double)
       (select-latest-valid-data-per-country)
+      (create-data-with-timestamp)
       (write-as-json out-path)
       (generate-message out-path)
       (println)))

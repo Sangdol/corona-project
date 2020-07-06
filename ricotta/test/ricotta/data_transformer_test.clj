@@ -110,3 +110,11 @@
 (deftest generate-message-test
   (is (= "Success (3 countries): /file/path"
          (generate-message [{} {} {}] "/file/path"))))
+
+(deftest create-data-with-timestamp-test
+  (is (= {:date "2020-07-06"
+          :countries
+                [{:date "2020-07-05"} {:date "2020-07-06"}]}
+         (create-data-with-timestamp
+           [{:date "2020-07-05"} {:date "2020-07-06"}]))))
+
