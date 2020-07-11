@@ -47,13 +47,12 @@
 
 
 (defn is-valid
-  "Returns false if 0 is less than 5% of the sum of the last week data"
   [new-cases cases-bucket]
   (and
     (number? new-cases)
     (or
-        (not= new-cases 0)
-        (< (/ (week-sum cases-bucket) 20) 1))))
+        (not (== new-cases 0))
+        (< (week-sum cases-bucket) 20))))
 
 
 (defn select-latest-valid-data-of-country
@@ -70,7 +69,12 @@
             new-cases (:new_cases latest)]
         (if (is-valid new-cases new-cases-bucket)
           (recur latest (conj new-cases-bucket new-cases) rest-rows)
-          (recur prev new-cases-bucket rest-rows))))))
+          (do
+            (println (str "Not valid data: "
+                          (:date latest) " "
+                          (:location latest) " "
+                          (:new_cases latest) " "))
+            (recur prev new-cases-bucket rest-rows)))))))
 
 
 (defn select-latest-valid-data-per-country
