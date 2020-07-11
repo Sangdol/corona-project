@@ -43,6 +43,7 @@
 
 
 (defn week-sum [cases-bucket]
+  (assert (every? number? cases-bucket) "cases-bucket must contain only numbers.")
   (reduce + (take-last 7 cases-bucket)))
 
 
@@ -57,7 +58,9 @@
 
 (defn select-latest-valid-data-of-country
   "Select latest valid data of one country data.
-   A number in a row of the table can be an empty string."
+   A number in a row of the table can be an empty string.
+
+   This will return the first low regardless of the validity of :new_cases data."
   [table]
   (loop [prev (first table)
          new-cases-bucket [(:new_cases prev)]
