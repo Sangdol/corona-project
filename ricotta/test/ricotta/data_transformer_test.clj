@@ -57,6 +57,11 @@
              {:date "2020-06-26" :location "a" :new_cases 30}
              {:date "2020-06-27" :location "a" :new_cases 0}])))
 
+  (is (= {:date "2020-06-21" :location "a" :new_cases 0}
+         (select-latest-valid-data-of-country
+           [{:date "2020-06-20" :location "a" :new_cases ""}
+            {:date "2020-06-21" :location "a" :new_cases 0}])))
+
   (is (= {:date "2020-06-27" :location "a" :new_cases 0}
          (select-latest-valid-data-of-country
            [{:date "2020-06-20" :location "a" :new_cases 1}

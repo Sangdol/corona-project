@@ -43,7 +43,8 @@
 
 
 (defn week-sum [cases-bucket]
-  (assert (every? number? cases-bucket) "cases-bucket must contain only numbers.")
+  (assert (every? number? cases-bucket)
+          (str "cases-bucket must contain only numbers: " cases-bucket))
   (reduce + (take-last 7 cases-bucket)))
 
 
@@ -56,14 +57,19 @@
         (< (week-sum cases-bucket) 20))))
 
 
+(defn println-error-row [row]
+  (println (str "Not valid data: "
+                (:date row) " "
+                (:location row) " "
+                (:new_cases row) " ")))
+
+
 (defn select-latest-valid-data-of-country
   "Select latest valid data of one country data.
-   A number in a row of the table can be an empty string.
-
-   This will return the first low regardless of the validity of :new_cases data."
+   A number in a row of the table can be an empty string."
   [table]
   (loop [prev (first table)
-         new-cases-bucket [(:new_cases prev)]
+         new-cases-bucket []
          rows (rest table)]
     (if (empty? rows)
       prev
@@ -73,10 +79,7 @@
         (if (is-valid new-cases new-cases-bucket)
           (recur latest (conj new-cases-bucket new-cases) rest-rows)
           (do
-            (println (str "Not valid data: "
-                          (:date latest) " "
-                          (:location latest) " "
-                          (:new_cases latest) " "))
+            (println-error-row latest)
             (recur prev new-cases-bucket rest-rows)))))))
 
 
