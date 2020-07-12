@@ -12,8 +12,8 @@ const table = new Tabulator("#table", {
     ],
     columns: [
         {title: "Country", field: "location", widthGrow: 5},
-        {title: "Total", field: "total_cases", widthGrow: 4, formatter: numberWithCommasFormatter},
         {title: "New", field: "new_cases", widthGrow: 3, formatter: numberWithCommasFormatter},
+        {title: "Total", field: "total_cases", widthGrow: 4, formatter: numberWithCommasFormatter},
     ],
 });
 
