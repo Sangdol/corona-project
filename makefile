@@ -11,7 +11,7 @@ ricotta:
 # prod
 #
 
-deploy: pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
+deploy: download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
 	@echo "Deployed"
 
 download-csv:
