@@ -26,6 +26,14 @@ body {
     text-decoration: none;
 }
 
+.update-date {
+    font-size: 60%;
+    color: #888;
+    vertical-align: top;
+    position: absolute;
+    bottom: 3px;
+}
+
 /*
  * Cookie banner
  */

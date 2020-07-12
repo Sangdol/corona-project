@@ -3,6 +3,14 @@ function numberWithCommasFormatter(cell, formatterParams, onRendered) {
     return cell.getValue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+tabledata.countries.forEach((country) => {
+  if (country.date == tabledata.date) {
+    country.name_and_date = country.location;
+  } else {
+    country.name_and_date = `${country.location}<br><span class="update-date">${country.date}</span>`;
+  }
+});
+
 const table = new Tabulator("#table", {
     data: tabledata.countries,
     layout: "fitColumns",
@@ -11,7 +19,7 @@ const table = new Tabulator("#table", {
         {column:"new_cases", dir:"desc"},
     ],
     columns: [
-        {title: "Country", field: "location", widthGrow: 5},
+        {title: "Country", field: "name_and_date", widthGrow: 5, formatter: "html"},
         {title: "New", field: "new_cases", widthGrow: 3, formatter: numberWithCommasFormatter},
         {title: "Total", field: "total_cases", widthGrow: 4, formatter: numberWithCommasFormatter},
     ],
