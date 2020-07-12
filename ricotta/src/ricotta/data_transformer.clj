@@ -43,9 +43,10 @@
 
 
 (defn week-sum [cases-bucket]
-  (assert (every? number? cases-bucket)
-          (str "cases-bucket must contain only numbers: " cases-bucket))
-  (reduce + (take-last 7 cases-bucket)))
+  (->>
+    (filter number? cases-bucket)  ;; some data could be an empty string
+    (take-last 7)
+    (reduce +)))
 
 
 (defn is-valid
@@ -80,7 +81,7 @@
           (recur latest (conj new-cases-bucket new-cases) rest-rows)
           (do
             (println-error-row latest)
-            (recur prev new-cases-bucket rest-rows)))))))
+            (recur prev (conj new-cases-bucket new-cases) rest-rows)))))))
 
 
 (defn select-latest-valid-data-per-country
@@ -116,7 +117,6 @@
 (defn generate-message
   [countries out-path]
   (str "Success (" (count countries) " countries): " out-path))
-
 
 
 (defn transform-data [in-path out-path]
