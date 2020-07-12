@@ -1,4 +1,4 @@
-.PHONY: all download-csv
+.PHONY: ricotta
 
 #
 # local
