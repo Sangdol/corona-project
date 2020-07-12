@@ -6,4 +6,5 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/data.json "1.0.0"]
                  [org.clojure/data.csv "1.0.0"]]
-  :repl-options {:init-ns ricotta.core})
+  :repl-options {:init-ns ricotta.core}
+  :main ricotta.core)
