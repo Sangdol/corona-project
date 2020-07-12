@@ -11,8 +11,11 @@ ricotta:
 # prod
 #
 
-deploy: download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
+deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
 	@echo "Deployed"
+
+prod-init:
+	mkdir -p data && mkdir -p ricotta/resources/web/dist
 
 download-csv:
 	@wget "https://covid.ourworldindata.org/data/owid-covid-data.csv" -O "data/owid-covid-data.csv"
