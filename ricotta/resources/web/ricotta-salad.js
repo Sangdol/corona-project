@@ -19,9 +19,9 @@ const table = new Tabulator("#table", {
         {column:"new_cases", dir:"desc"},
     ],
     columns: [
-        {title: "Country", field: "name_and_date", widthGrow: 5, formatter: "html"},
-        {title: "New", field: "new_cases", widthGrow: 3, formatter: numberWithCommasFormatter},
-        {title: "Total", field: "total_cases", widthGrow: 4, formatter: numberWithCommasFormatter},
+        {title: "Country", field: "name_and_date", widthGrow: 5, formatter: "html", resizable: false},
+        {title: "New", field: "new_cases", widthGrow: 3, formatter: numberWithCommasFormatter, resizable: false},
+        {title: "Total", field: "total_cases", widthGrow: 4, formatter: numberWithCommasFormatter, resizable: false},
     ],
 });
 
