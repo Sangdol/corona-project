@@ -7,7 +7,7 @@ tabledata.countries.forEach((country) => {
   if (country.date == tabledata.date) {
     country.name_and_date = country.location;
   } else {
-    country.name_and_date = `${country.location}<br><span class="update-date">${country.date}</span>`;
+    country.name_and_date = `${country.location}<br><span class="update-date">${formatDateShort(country.date)}</span>`;
   }
 });
 
@@ -25,12 +25,20 @@ const table = new Tabulator("#table", {
     ],
 });
 
+function formatDateShort(dateStr) {
+  const date = new Date(dateStr);
+  const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' });
+  const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date);
+
+  return `${month} ${day}`;
+}
+
 // https://stackoverflow.com/a/3552493/524588
 // dateStr: e.g., 2020-07-21
 function formatDate(dateStr) {
   const date = new Date(dateStr);
   const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' });
-  const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date );
+  const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date);
 
   return `${month} ${day}, ${year}`
 }
