@@ -25,4 +25,14 @@ const table = new Tabulator("#table", {
     ],
 });
 
-document.getElementById("update-date").innerText = tabledata.date;
+// https://stackoverflow.com/a/3552493/524588
+// dateStr: e.g., 2020-07-21
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' });
+  const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date );
+
+  return `${month} ${day}, ${year}`
+}
+
+document.getElementById("update-date").innerText = formatDate(tabledata.date);
