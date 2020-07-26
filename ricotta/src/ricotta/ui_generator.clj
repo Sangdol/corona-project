@@ -29,15 +29,25 @@
     (generate-message output-path)
     (println)))
 
+(defn generate-html [env-config page]
+  (generate-file (:html-template-path env-config)
+                 ["body"]
+                 [(interpolate-variable
+                    (:html-body-content-path-template env-config)
+                    "page"
+                    page)]
+                 (interpolate-variable
+                   (:html-output-path-template env-config)
+                   "page"
+                   page)))
+
 (defn generate-ui [env-config]
-  ;; generate js
+  ;; js
   (generate-file (:js-template-path env-config)
                  ["data"]
                  [(:json-daily-data-path env-config)]
                  (:js-output-path env-config))
-  ;; generate index html
-  (generate-file (:html-template-path env-config)
-                 ["body"]
-                 [(:html-index-body-content-path env-config)]
-                 (:html-index-prod-path env-config)))
 
+  ;; html
+  (generate-html env-config "index")
+  (generate-html env-config "about-data"))

@@ -2,6 +2,10 @@ body {
     font-family: Baskerville;
 }
 
+.content {
+    margin: 10px;
+}
+
 #container {
     max-width: 736px;
     margin: 0 auto;
