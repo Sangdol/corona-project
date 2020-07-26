@@ -6,5 +6,11 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [org.clojure/data.json "1.0.0"]
                  [org.clojure/data.csv "1.0.0"]]
+  ;; https://github.com/weavejester/lein-auto
+  :plugins [ [lein-auto "0.1.3"]]
+  ;; monitor contents directory to regenerate when some of them change
+  ;; e.g., lein auto run all ui
+  :auto {"run" {:file-pattern #"\.(html|js)$"
+                :paths ["resources/web/contents"]}}
   :repl-options {:init-ns ricotta.core}
   :main ricotta.core)

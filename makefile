@@ -10,6 +10,9 @@ ricotta:
 ui:
 	cd ricotta && lein run ui local
 
+auto-ui:
+	cd ricotta && lein auto run ui local
+
 #
 # prod
 #
