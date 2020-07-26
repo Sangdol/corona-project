@@ -2,12 +2,20 @@
 
 (def home (System/getProperty "user.home"))
 (def project-root (str home "/projects/corona-project"))
+(def data (str project-root "/data"))
+(def web (str project-root "/ricotta/resources/web"))
 
 (def common
-  {:csv-owid-data-path   (str project-root "/data/owid-covid-data.csv")
-   :json-daily-data-path (str project-root "/data/europe-data.json")
-   :js-template-path     (str project-root "/ricotta/resources/web/template/ricotta-milk.js")
-   :js-prod-path         (str project-root "/ricotta/resources/web/dist/ricotta-cheese.js")})
+  {:csv-owid-data-path           (str data "/owid-covid-data.csv")
+   ;; js
+   :json-daily-data-path         (str data "/europe-data.json")
+   :js-template-path             (str web "/template/ricotta-milk.js")
+   :js-output-path               (str web "/dist/ricotta-cheese.js")
+   ;; html
+   :html-template-path           (str web "/template/template.html")
+   :html-index-body-content-path (str web "/contents/index-body.html")
+   :html-index-prod-path         (str web "/index.html")})
+
 
 (def local {})
 
