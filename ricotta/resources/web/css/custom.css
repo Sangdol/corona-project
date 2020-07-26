@@ -6,6 +6,10 @@ body {
     margin: 10px;
 }
 
+.content p {
+  margin-bottom: 1rem;
+}
+
 #container {
     max-width: 736px;
     margin: 0 auto;
