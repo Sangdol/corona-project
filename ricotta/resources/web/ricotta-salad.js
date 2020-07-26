@@ -7,7 +7,7 @@ tabledata.countries.forEach((country) => {
   if (country.date == tabledata.date) {
     country.name_and_date = country.location;
   } else {
-    country.name_and_date = `${country.location}<br><span class="update-date">${formatDateShort(country.date)}</span>`;
+    country.name_and_date = `${country.location}<br><span class="sub-text">${formatDateShort(country.date)}</span>`;
   }
 });
 
@@ -21,7 +21,14 @@ const table = new Tabulator("#table", {
     ],
     columns: [
         {title: "Country", field: "name_and_date", widthGrow: 6, formatter: "html", resizable: false},
-        {title: "New", field: "new_cases", widthGrow: 4, formatter: numberWithCommasFormatter, resizable: false},
+        {
+          title: `New<br><span class="sub-text">Daily</span>`,
+          titleFormatter: "html",
+          field: "new_cases",
+          widthGrow: 4,
+          formatter: numberWithCommasFormatter,
+          resizable: false
+        },
         {title: "Total", field: "total_cases", widthGrow: 5, formatter: numberWithCommasFormatter, resizable: false},
     ],
 });
