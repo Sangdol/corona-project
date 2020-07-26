@@ -17,7 +17,7 @@ auto-ui:
 # prod
 #
 
-deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
+deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan clean-up
 	echo "Deployed"
 
 prod-init:
@@ -47,3 +47,7 @@ commit-push-parmesan:
 		git commit -m "publish" && \
 		git push && \
 		echo "Parmesan pushed"
+
+clean-up:
+	# come back to master from deploy
+	git checkout master
