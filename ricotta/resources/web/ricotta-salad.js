@@ -12,6 +12,7 @@ tabledata.countries.forEach((country) => {
 });
 
 const table = new Tabulator("#table", {
+    selectable: false,
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
