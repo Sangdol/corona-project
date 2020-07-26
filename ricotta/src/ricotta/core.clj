@@ -28,4 +28,4 @@
       (cond
         (= op "all") (run-all env-config)
         :else (run op env-config)))
-    (throw (Exception. "Env is needed - local or prod?"))))
+    (throw (Exception. "Op and Env is needed e.g., lein run all local"))))
