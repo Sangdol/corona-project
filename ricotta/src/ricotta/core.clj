@@ -6,12 +6,9 @@
 (defn -main [& args]
   (if-not (empty? args)
     (let [env (nth args 0)
-          config (config env)]
+          env-config (config env)]
       (transform-data
-        (:input-csv-path config)
-        (:output-json-path config))
-      (generate-ui
-        (:js-template-path config)
-        (:output-json-path config)
-        (:js-output-path config)))
+        (:csv-owid-data-path env-config)
+        (:json-daily-data-path env-config))
+      (generate-ui env-config))
     (throw (Exception. "Env is needed - local or prod?"))))

@@ -4,10 +4,10 @@
 (def project-root (str home "/projects/corona-project"))
 
 (def common
-  {:input-csv-path   (str project-root "/data/owid-covid-data.csv")
-   :output-json-path (str project-root "/data/europe-data.csv")
-   :js-template-path (str project-root "/ricotta/resources/web/ricotta-milk.js")
-   :js-output-path   (str project-root "/ricotta/resources/web/dist/ricotta-cheese.js")})
+  {:csv-owid-data-path   (str project-root "/data/owid-covid-data.csv")
+   :json-daily-data-path (str project-root "/data/europe-data.json")
+   :js-template-path     (str project-root "/ricotta/resources/web/template/ricotta-milk.js")
+   :js-prod-path         (str project-root "/ricotta/resources/web/dist/ricotta-cheese.js")})
 
 (def local {})
 
@@ -15,7 +15,7 @@
 
 (defn config [env]
   ({:local (merge common local)
-    :prod (merge common prod)}
+    :prod  (merge common prod)}
    (keyword env)))
 
 

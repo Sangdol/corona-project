@@ -5,5 +5,5 @@
 
 (deftest config-test
   (is (= (str cf/project-root "/data/owid-covid-data.csv")
-         ((config "local") :input-csv-path))))
+         ((config "local") :csv-owid-data-path))))
 
