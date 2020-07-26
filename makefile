@@ -5,7 +5,10 @@
 #
 
 ricotta:
-	cd ricotta && lein run local
+	cd ricotta && lein run all local
+
+ui:
+	cd ricotta && lein run ui local
 
 #
 # prod
@@ -29,7 +32,7 @@ pull-ricotta:
 
 # TODO log
 run-ricotta:
-	cd ricotta && lein run prod
+	cd ricotta && lein run all prod
 
 generate-parmesan:
 	cp -r ricotta/resources/web/* ../parmesan
