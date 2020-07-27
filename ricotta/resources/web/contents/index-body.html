@@ -3,8 +3,13 @@
             <h3 class="title">Europe COVID-19 Cases</h3>
             <div id="update-date">2020-07-05</div>
             <a href="about-data">Can I trust the data?</a>
+            <div class="row button-wrap">
+                <button class="daily-new" data-name="daily-new">Daily New</button>
+                <button class="total" data-name="total">Total</button>
+            </div>
         </section>
-        <div id="table"></div>
+        <div id="table" class="table daily-new"></div>
+        <div id="table-total" class="table total" display="none"></div>
         <div class="row">
             <div id="credit" class="u-pull-right">Data from <a href="https://ourworldindata.org">Our World In Data</a></div>
         </div>

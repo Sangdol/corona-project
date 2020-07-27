@@ -11,6 +11,7 @@
   ;; monitor contents directory to regenerate when some of them change
   ;; e.g., lein auto run all ui
   :auto {"run" {:file-pattern #"\.(html|js)$"
-                :paths ["resources/web/contents"]}}
+                :paths ["resources/web/contents",
+                        "resources/web/template"]}}
   :repl-options {:init-ns ricotta.core}
   :main ricotta.core)

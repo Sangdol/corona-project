@@ -17,13 +17,12 @@ tabledata.countries.forEach((country) => {
       <span class="sub-text">${formatDateShort(country.date)}</span>`;
   }
 
-  country.new_cases_and_per_million =
+  country.new_and_total_cases =
     `${addCommas(country.new_cases)}<br>
-    <span class="sub-text">${addCommas(country.new_cases_per_million.round(2))} per million</span>`;
+    <span class="sub-text">Total: ${addCommas(country.total_cases)}</span>`;
 
-  country.total_cases_and_per_million =
-    `${addCommas(country.total_cases)}<br>
-    <span class="sub-text">${addCommas(country.total_cases_per_million.round(0))} per million</span>`;
+  country.new_and_total_per_million =
+    `${addCommas(country.new_cases_per_million.round(2))}`
 });
 
 // http://tabulator.info/docs/4.7/sort#func-custom
@@ -36,13 +35,56 @@ function multilineSorter(a, b) {
     return cases(a) - cases(b);
 }
 
+function numberWithCommasFormatter(cell, formatterParams, onRendered) {
+    return cell.getValue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const table = new Tabulator("#table", {
     selectable: false,
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
-        {column:"total_cases_and_per_million", dir:"desc"},
-        {column:"new_cases_and_per_million", dir:"desc"},
+        {column:"new_cases_per_million", dir:"desc"},
+        {column:"new_cases", dir:"desc"},
+    ],
+    columns: [
+        {
+          title: "Country",
+          field: "name_and_date",
+          widthGrow: 6,
+          formatter: "html",
+          resizable: false,
+        },
+        {
+          title: `New`,
+          titleFormatter: "html",
+          field: "new_cases",
+          widthGrow: 5,
+          formatter: function(cell) {
+            return addCommas(cell.getValue());
+          },
+          resizable: false
+        },
+        {
+          title: `Density<br><span class="sub-text">Per Million</span>`,
+          titleFormatter: "html",
+          field: "new_cases_per_million",
+          widthGrow: 4,
+          formatter: function(cell) {
+            return addCommas(cell.getValue().round(2));
+          },
+          resizable: false,
+        },
+    ],
+});
+
+const tableTotal = new Tabulator("#table-total", {
+    selectable: false,
+    data: tabledata.countries,
+    layout: "fitColumns",
+    initialSort:[
+        {column:"total_cases_per_million", dir:"desc"},
+        {column:"total_cases", dir:"desc"},
     ],
     columns: [
         {
@@ -53,21 +95,24 @@ const table = new Tabulator("#table", {
           resizable: false
         },
         {
-          title: `New<br><span class="sub-text">Daily</span>`,
+          title: `Total`,
           titleFormatter: "html",
-          field: "new_cases_and_per_million",
-          widthGrow: 4,
-          formatter: "html",
-          sorter: multilineSorter,
-          resizable: false
+          field: "total_cases",
+          widthGrow: 5,
+          formatter: function(cell) {
+            return addCommas(cell.getValue().toString());
+          },
+          resizable: false,
         },
         {
-          title: "Total",
-          field: "total_cases_and_per_million",
+          title: `Density<br><span class="sub-text">Per Million</span>`,
+          titleFormatter: "html",
+          field: "total_cases_per_million",
           widthGrow: 5,
-          formatter: "html",
-          sorter: multilineSorter,
-          resizable: false
+          formatter: function(cell) {
+            return addCommas(cell.getValue().round(0));
+          },
+          resizable: false,
         },
     ],
 });
@@ -91,3 +136,10 @@ function formatDate(dateStr) {
 }
 
 document.getElementById("update-date").innerText = formatDate(tabledata.date);
+
+$('.button-wrap button').click(function() {
+  const name = $(this).data('name');
+
+  $('.table').hide();
+  $(`.${name}`).show();
+});
