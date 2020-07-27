@@ -24,6 +24,12 @@ body {
     text-align: center;
 }
 
+button {
+    border-radius: 0;
+    height: 32px;
+    line-height: 32px;
+}
+
 .header .button-wrap {
     margin-top: 15px;
 }

@@ -3,11 +3,6 @@ function addCommas(n) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
-// https://stackoverflow.com/a/19722641/524588
-Number.prototype.round = function(places) {
-  return +(Math.round(this + "e+" + places)  + "e-" + places);
-}
-
 tabledata.countries.forEach((country) => {
   if (country.date == tabledata.date) {
     country.name_and_date = country.location;
@@ -16,28 +11,7 @@ tabledata.countries.forEach((country) => {
       `${country.location}<br>
       <span class="sub-text">${formatDateShort(country.date)}</span>`;
   }
-
-  country.new_and_total_cases =
-    `${addCommas(country.new_cases)}<br>
-    <span class="sub-text">Total: ${addCommas(country.total_cases)}</span>`;
-
-  country.new_and_total_per_million =
-    `${addCommas(country.new_cases_per_million.round(2))}`
 });
-
-// http://tabulator.info/docs/4.7/sort#func-custom
-// takes number from "number + sub-text" html
-function multilineSorter(a, b) {
-    function cases(text) {
-      return text.match(/[\d,]+/)[0].replace(/,/g, "");
-    }
-
-    return cases(a) - cases(b);
-}
-
-function numberWithCommasFormatter(cell, formatterParams, onRendered) {
-    return cell.getValue().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 const table = new Tabulator("#table", {
     selectable: false,
@@ -69,9 +43,9 @@ const table = new Tabulator("#table", {
           title: `Density<br><span class="sub-text">Per Million</span>`,
           titleFormatter: "html",
           field: "new_cases_per_million",
-          widthGrow: 4,
+          widthGrow: 5,
           formatter: function(cell) {
-            return addCommas(cell.getValue().round(2));
+            return addCommas(cell.getValue().toFixed(2));
           },
           resizable: false,
         },
@@ -110,7 +84,7 @@ const tableTotal = new Tabulator("#table-total", {
           field: "total_cases_per_million",
           widthGrow: 5,
           formatter: function(cell) {
-            return addCommas(cell.getValue().round(0));
+            return addCommas(cell.getValue().toFixed(1));
           },
           resizable: false,
         },
