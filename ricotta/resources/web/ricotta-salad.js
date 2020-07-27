@@ -29,7 +29,7 @@ const table = new Tabulator("#table", {
           resizable: false,
         },
         {
-          title: `New`,
+          title: `New<br><span class="sub-text">Daily</span>`,
           titleFormatter: "html",
           field: "new_cases",
           widthGrow: 5,
