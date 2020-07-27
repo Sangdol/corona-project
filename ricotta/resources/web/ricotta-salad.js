@@ -18,7 +18,6 @@ const table = new Tabulator("#table", {
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
-        {column:"new_cases_per_million", dir:"desc"},
         {column:"new_cases", dir:"desc"},
     ],
     columns: [
@@ -37,7 +36,8 @@ const table = new Tabulator("#table", {
           formatter: function(cell) {
             return addCommas(cell.getValue());
           },
-          resizable: false
+          resizable: false,
+          headerSortStartingDir:"desc",
         },
         {
           title: `Density<br><span class="sub-text">Per Million</span>`,
@@ -48,6 +48,7 @@ const table = new Tabulator("#table", {
             return addCommas(cell.getValue().toFixed(2));
           },
           resizable: false,
+          headerSortStartingDir: "desc",
         },
     ],
 });
@@ -57,7 +58,6 @@ const tableTotal = new Tabulator("#table-total", {
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
-        {column:"total_cases_per_million", dir:"desc"},
         {column:"total_cases", dir:"desc"},
     ],
     columns: [
@@ -77,6 +77,7 @@ const tableTotal = new Tabulator("#table-total", {
             return addCommas(cell.getValue().toString());
           },
           resizable: false,
+          headerSortStartingDir: "desc",
         },
         {
           title: `Density<br><span class="sub-text">Per Million</span>`,
@@ -87,6 +88,7 @@ const tableTotal = new Tabulator("#table-total", {
             return addCommas(cell.getValue().toFixed(1));
           },
           resizable: false,
+          headerSortStartingDir: "desc",
         },
     ],
 });
