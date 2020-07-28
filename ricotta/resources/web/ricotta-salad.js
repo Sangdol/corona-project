@@ -112,8 +112,12 @@ function trendFormatter(days) {
 }
 
 // http://tabulator.info/docs/4.7/sort
-function chartSorterByLastElement(a, b, aRow, bRow, column, dir, sorterParams) {
-  return a.slice(-1)[0] - b.slice(-1)[0];
+function chartSorter(a, b, aRow, bRow, column, dir, sorterParams) {
+  function rangeSum(list) {
+    return list.slice(-sorterParams.range).reduce((x, y) => x + y);
+  }
+
+  return rangeSum(a) - rangeSum(b);
 }
 
 const tableTrend = new Tabulator("#table-trend", {
@@ -137,7 +141,8 @@ const tableTrend = new Tabulator("#table-trend", {
           field: "trend",
           widthGrow: 5,
           formatter: trendFormatter(30),
-          sorter: chartSorterByLastElement,
+          sorter: chartSorter,
+          sorterParams: {range:30},
           resizable: false,
           headerSortStartingDir: "desc",
         },
@@ -147,7 +152,8 @@ const tableTrend = new Tabulator("#table-trend", {
           field: "trend",
           widthGrow: 5,
           formatter: trendFormatter(90),
-          sorter: chartSorterByLastElement,
+          sorter: chartSorter,
+          sorterParams: {range:90},
           resizable: false,
           headerSortStartingDir: "desc",
         },
