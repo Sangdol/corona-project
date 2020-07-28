@@ -25,6 +25,7 @@
     gtag('config', 'UA-23501808-4');
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="js/jquery.sparkline.min.js"></script>
     <script type="text/javascript" src="tabulator/js/tabulator.min.js"></script>
     <script type="text/javascript" src="eu_cookie.js"></script>
 </head>
@@ -37,10 +38,12 @@
             <div class="row button-wrap">
                 <button class="daily-new" data-name="daily-new">Daily New</button>
                 <button class="total" data-name="total">Total</button>
+                <button class="trend" data-name="trend">Trend</button>
             </div>
         </section>
         <div id="table" class="table daily-new"></div>
         <div id="table-total" class="table total" display="none"></div>
+        <div id="table-trend" class="table trend" display="none"></div>
         <div class="row">
             <div id="credit" class="u-pull-right">Data from <a href="https://ourworldindata.org">Our World In Data</a></div>
         </div>

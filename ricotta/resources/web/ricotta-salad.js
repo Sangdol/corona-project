@@ -93,6 +93,60 @@ const tableTotal = new Tabulator("#table-total", {
     ],
 });
 
+function trendFormatter(days) {
+  return function(cell, formatterParams, onRendered){
+    onRendered(function(){
+        $(cell.getElement()).sparkline(cell.getValue().slice(-days),
+          {
+            width:"100%",
+            type:"line",
+            disableTooltips:false,
+            lineColor: "#000",
+            fillColor: "#eee",
+            highlightLineColor: "#333",
+            spotRadius: 0,
+          });
+    });
+  }
+}
+
+
+const tableTrend = new Tabulator("#table-trend", {
+    selectable: false,
+    data: tabledata.countries,
+    layout: "fitColumns",
+    initialSort:[
+        // {column:"total_cases", dir:"desc"},
+    ],
+    columns: [
+        {
+          title: "Country",
+          field: "name_and_date",
+          widthGrow: 6,
+          formatter: "html",
+          resizable: false
+        },
+        {
+          title: `30 Days`,
+          titleFormatter: "html",
+          field: "trend",
+          widthGrow: 5,
+          formatter: trendFormatter(30),
+          resizable: false,
+          headerSortStartingDir: "desc",
+        },
+        {
+          title: `90 Days`,
+          titleFormatter: "html",
+          field: "trend",
+          widthGrow: 5,
+          formatter: trendFormatter(90),
+          resizable: false,
+          headerSortStartingDir: "desc",
+        },
+    ],
+});
+
 function formatDateShort(dateStr) {
   const date = new Date(dateStr);
   const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' });
