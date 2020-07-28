@@ -65,6 +65,10 @@
                 (:new_cases row) " ")))
 
 
+(defn numerify [list]
+  (map (fn [n] (if (number? n) n 0)) list))
+
+
 (defn select-latest-valid-data-of-country
   "Select latest valid data of one country data.
    A number in a row of the table can be an empty string."
@@ -73,7 +77,7 @@
          new-cases-bucket []
          rows (rest table)]
     (if (empty? rows)
-      prev
+      (merge prev {:trend (numerify new-cases-bucket)})
       (let [latest (first rows)
             rest-rows (rest rows)
             new-cases (:new_cases latest)]
