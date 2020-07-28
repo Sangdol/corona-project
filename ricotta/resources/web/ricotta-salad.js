@@ -96,20 +96,25 @@ const tableTotal = new Tabulator("#table-total", {
 function trendFormatter(days) {
   return function(cell, formatterParams, onRendered){
     onRendered(function(){
-        $(cell.getElement()).sparkline(cell.getValue().slice(-days),
-          {
-            width:"100%",
-            type:"line",
-            disableTooltips:false,
-            lineColor: "#000",
-            fillColor: "#eee",
-            highlightLineColor: "#333",
-            spotRadius: 0,
-          });
+      // https://omnipotent.net/jquery.sparkline/#s-about
+      $(cell.getElement()).sparkline(cell.getValue().slice(-days),
+        {
+          width:"100%",
+          type:"line",
+          disableTooltips:false,
+          lineColor: "#000",
+          fillColor: "#eee",
+          highlightLineColor: "#333",
+          spotRadius: 0,
+        });
     });
   }
 }
 
+// http://tabulator.info/docs/4.7/sort
+function chartSorterByLastElement(a, b, aRow, bRow, column, dir, sorterParams) {
+  return a.slice(-1)[0] - b.slice(-1)[0];
+}
 
 const tableTrend = new Tabulator("#table-trend", {
     selectable: false,
@@ -132,6 +137,7 @@ const tableTrend = new Tabulator("#table-trend", {
           field: "trend",
           widthGrow: 5,
           formatter: trendFormatter(30),
+          sorter: chartSorterByLastElement,
           resizable: false,
           headerSortStartingDir: "desc",
         },
@@ -141,6 +147,7 @@ const tableTrend = new Tabulator("#table-trend", {
           field: "trend",
           widthGrow: 5,
           formatter: trendFormatter(90),
+          sorter: chartSorterByLastElement,
           resizable: false,
           headerSortStartingDir: "desc",
         },
