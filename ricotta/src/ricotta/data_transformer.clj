@@ -67,7 +67,11 @@
 
 
 (defn numerify [list]
-  (map (fn [n] (if (number? n) n 0)) list))
+  "a number can be empty string or minus (UK July 03: -29726)"
+  (map (fn [n]
+         (if (and (number? n) (>= n 0))
+           n 0))
+       list))
 
 
 (defn remove-trailing-zeros [list]

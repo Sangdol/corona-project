@@ -165,7 +165,9 @@
 
 (deftest empty-str-to-zero-test
   (is (= [0 0 1 2 3]
-         (numerify ["" 0 1 2 3]))))
+         (numerify ["" 0 1 2 3])))
+  (is (= [0 0 0 2 3]
+         (numerify ["" 0 -1 2 3]))))
 
 
 (deftest remove-trailing-zeros-test
