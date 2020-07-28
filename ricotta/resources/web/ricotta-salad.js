@@ -125,7 +125,7 @@ const tableTrend = new Tabulator("#table-trend", {
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
-        // {column:"total_cases", dir:"desc"},
+        {column:"trend", dir:"desc"},
     ],
     columns: [
         {
