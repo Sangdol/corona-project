@@ -47,7 +47,7 @@
 (deftest select-latest-valid-data-of-country-test
 
   (is (= {:date "2020-06-26" :location "a" :new_cases 30
-          :trend [11 12 0 0 20 30 0]}
+          :trend [11 12 0 0 20 30]}
          (select-latest-valid-data-of-country
             [{:date "2020-06-20" :location "a" :new_cases 10}
              {:date "2020-06-21" :location "a" :new_cases 11}
@@ -103,7 +103,7 @@
             {:date "2020-06-27" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-25" :location "a" :new_cases 200
-          :trend '(0 2 0 0 2 1 1 2 0 0 200 0 0.0)}
+          :trend '(0 2 0 0 2 1 1 2 0 0 200)}
          (select-latest-valid-data-of-country
            [
             {:date "2020-06-14" :location "a" :new_cases 0}
@@ -126,7 +126,7 @@
   (is (= [{:date "2020-06-27" :location "b" :new_cases 40
            :trend [11 12 0 0 20 30 40]}
           {:date "2020-06-26" :location "a" :new_cases 30
-           :trend [11 12 0 0 20 30 0]}]
+           :trend [11 12 0 0 20 30]}]
          (select-latest-valid-data-per-country
            [{:date "2020-06-20" :location "b" :new_cases 10}
             {:date "2020-06-21" :location "b" :new_cases 11}
@@ -167,3 +167,14 @@
   (is (= [0 0 1 2 3]
          (numerify ["" 0 1 2 3]))))
 
+
+(deftest remove-trailing-zeros-test
+  (is (= [0 0 1 1]
+         (remove-trailing-zeros [0 0 1 1 0 0]))))
+
+
+(deftest trend-test
+  (is (= [0 0 1 1 0]
+         (trend [0 0 1 1 0] {:new_cases 0})))
+  (is (= [0 0 1 1]
+         (trend [0 0 1 1 0] {:new_cases 1}))))

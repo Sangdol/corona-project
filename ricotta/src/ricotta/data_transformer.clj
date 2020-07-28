@@ -11,6 +11,7 @@
                        :population))
 (def double-columns [:total_cases_per_million :new_cases_per_million
                      :total_cases :new_cases :population])
+(def trend-size 100)
 
 
 (defn read-csv-as-maps [in-path]
@@ -69,6 +70,20 @@
   (map (fn [n] (if (number? n) n 0)) list))
 
 
+(defn remove-trailing-zeros [list]
+  (->>
+    (reverse list)
+    (drop-while zero?)
+    (reverse)))
+
+
+(defn trend [new-cases-bucket prev]
+  (->>
+    (numerify new-cases-bucket)
+    (#(if (zero? (:new_cases prev)) % (remove-trailing-zeros %)))
+    (take-last trend-size)))
+
+
 (defn select-latest-valid-data-of-country
   "Select latest valid data of one country data.
    A number in a row of the table can be an empty string."
@@ -77,7 +92,8 @@
          new-cases-bucket []
          rows (rest table)]
     (if (empty? rows)
-      (merge prev {:trend (numerify new-cases-bucket)})
+      (merge prev {:trend (trend new-cases-bucket prev)})
+
       (let [latest (first rows)
             rest-rows (rest rows)
             new-cases (:new_cases latest)]
