@@ -19,6 +19,11 @@ a.back-home {
     color: inherit;
 }
 
+a.back-home img {
+    height: 20px;
+    width: 20px;
+}
+
 .back-home {
     position: fixed;
     margin-top: 10px;
@@ -35,14 +40,22 @@ a.back-home {
 }
 
 button {
-    border-radius: 0;
-    height: 32px;
-    line-height: 32px;
+    height: 36px;
+    line-height: 36px;
     padding: 0 20px;
 }
 
 .header .button-wrap {
     margin-top: 15px;
+}
+
+.header .button-wrap .material-icons {
+    /* font-size: 20px; */
+    /* position: absolute; */
+    /* margin-top: 4px; */
+    font-size: inherit;
+    line-height: 0;
+    vertical-align: middle;
 }
 
 #credit {
