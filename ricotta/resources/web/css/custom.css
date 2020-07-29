@@ -15,6 +15,16 @@ body {
     margin: 0 auto;
 }
 
+a.back-home {
+    color: inherit;
+}
+
+.back-home {
+    position: fixed;
+    margin-top: 10px;
+    margin-left: 20px;
+}
+
 .table {
     font-family: Roboto;
 }
