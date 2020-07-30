@@ -25,7 +25,7 @@ a.back-home img {
 }
 
 .back-home {
-    position: fixed;
+    position: absolute;
     margin-top: 10px;
     margin-left: 20px;
 }
