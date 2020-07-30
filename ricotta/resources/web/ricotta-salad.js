@@ -102,8 +102,8 @@ function trendFormatter(days) {
           width:"100%",
           type:"line",
           disableTooltips:false,
-          lineColor: "#295dc4",
-          fillColor: "#e1f4f5",
+          lineColor: "#353B3C",
+          fillColor: "#EEF0F2",
           highlightLineColor: "#333",
           spotRadius: 0,
         });
