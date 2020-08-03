@@ -50,4 +50,5 @@ commit-push-parmesan:
 
 clean-up:
 	# come back to master from deploy
+	git checkout .
 	git checkout master
