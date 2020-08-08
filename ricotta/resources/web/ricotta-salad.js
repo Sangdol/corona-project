@@ -190,3 +190,13 @@ $('.button-wrap button').click(function() {
     button_name: name
   });
 });
+
+$('.tabulator-sortable').click(function() {
+  const tableName = $(this).closest('.tabulator.table').data('name');
+  const buttonName = $(this).attr('tabulator-field');
+
+  gtag('event', 'sort_click', {
+    table_name: tableName,
+    button_name: buttonName
+  });
+});
