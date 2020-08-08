@@ -185,4 +185,6 @@ $('.button-wrap button').click(function() {
 
   $('.table').hide();
   $(`.${name}`).show();
+
+  ga('send', 'event', 'Top Buttons', name);
 });
