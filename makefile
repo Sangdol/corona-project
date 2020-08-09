@@ -31,8 +31,10 @@ download-csv:
 	echo "downloaded: data/owid-covid-data.csv"
 
 pull-ricotta:
-	git checkout master && git branch -D deploy
-	git fetch origin deploy && \
+	git checkout master && \
+		git branch -D deploy && \
+		git pull && \
+		git fetch origin deploy && \
 		git checkout deploy && \
 		echo "Git-pulled the deploy branch of ricotta"
 
