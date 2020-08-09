@@ -17,7 +17,7 @@ auto-ui:
 # prod
 #
 
-fe-deploy: pull-ricotta generate-parmesan commit-push-parmesan clean-up
+fe-deploy: pull-ricotta run-ricotta generate-parmesan commit-push-parmesan clean-up
 	echo "Front-end deployed"
 
 deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan clean-up
