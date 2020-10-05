@@ -93,11 +93,11 @@ const tableTotal = new Tabulator("#table-total", {
     ],
 });
 
-function trendFormatter(days) {
+function trendFormatter(weeks) {
   return function(cell, formatterParams, onRendered){
     onRendered(function(){
       // https://omnipotent.net/jquery.sparkline/#s-about
-      $(cell.getElement()).sparkline(cell.getValue().slice(-days),
+      $(cell.getElement()).sparkline(cell.getValue().slice(-weeks),
         {
           width:"100%",
           type:"line",
@@ -136,22 +136,22 @@ const tableTrend = new Tabulator("#table-trend", {
           resizable: false
         },
         {
-          title: `30 Days`,
+          title: `8 weeks`,
           titleFormatter: "html",
-          field: "trend",
+          field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(30),
+          formatter: trendFormatter(8),
           sorter: chartSorter,
           sorterParams: {range:30},
           resizable: false,
           headerSortStartingDir: "desc",
         },
         {
-          title: `90 Days`,
+          title: `36 weeks`,
           titleFormatter: "html",
-          field: "trend",
+          field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(90),
+          formatter: trendFormatter(36),
           sorter: chartSorter,
           sorterParams: {range:90},
           resizable: false,

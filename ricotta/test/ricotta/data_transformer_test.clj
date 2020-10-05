@@ -47,7 +47,7 @@
 (deftest select-latest-valid-data-of-country-test
 
   (is (= {:date "2020-06-26" :location "a" :new_cases 30
-          :trend [11 12 0 0 20 30]}
+          :weekly-trend (weekly-trend [11 12 0 0 20 30])}
          (select-latest-valid-data-of-country
             [{:date "2020-06-20" :location "a" :new_cases 10}
              {:date "2020-06-21" :location "a" :new_cases 11}
@@ -59,7 +59,7 @@
              {:date "2020-06-27" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-27" :location "a" :new_cases 0
-          :trend '(11 12 0 1 0 0 0 0 0)}
+          :weekly-trend (weekly-trend '(11 12 0 1 0 0 0 0 0))}
          (select-latest-valid-data-of-country
            [{:date "2020-06-18" :location "a" :new_cases 10}
             {:date "2020-06-19" :location "a" :new_cases 11}
@@ -73,13 +73,13 @@
             {:date "2020-06-27" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-21" :location "a" :new_cases 0
-          :trend [0]}
+          :weekly-trend (weekly-trend [0])}
          (select-latest-valid-data-of-country
            [{:date "2020-06-20" :location "a" :new_cases ""}
             {:date "2020-06-21" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-27" :location "a" :new_cases 0
-          :trend '(1 2 0 0 2 3 0)}
+          :weekly-trend (weekly-trend '(1 2 0 0 2 3 0))}
          (select-latest-valid-data-of-country
            [{:date "2020-06-20" :location "a" :new_cases 1}
             {:date "2020-06-21" :location "a" :new_cases 1}
@@ -91,7 +91,7 @@
             {:date "2020-06-27" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-27" :location "a" :new_cases 0
-          :trend '(1 2 0 0 2 0 0)}
+          :weekly-trend  (weekly-trend '(1 2 0 0 2 0 0))}
          (select-latest-valid-data-of-country
            [{:date "2020-06-20" :location "a" :new_cases 1}
             {:date "2020-06-21" :location "a" :new_cases 1}
@@ -103,7 +103,7 @@
             {:date "2020-06-27" :location "a" :new_cases 0}])))
 
   (is (= {:date "2020-06-25" :location "a" :new_cases 200
-          :trend '(0 2 0 0 2 1 1 2 0 0 200)}
+          :weekly-trend (weekly-trend '(0 2 0 0 2 1 1 2 0 0 200))}
          (select-latest-valid-data-of-country
            [
             {:date "2020-06-14" :location "a" :new_cases 0}
@@ -124,9 +124,9 @@
 
 (deftest select-latest-data-per-country-test
   (is (= [{:date "2020-06-27" :location "b" :new_cases 40
-           :trend [11 12 0 0 20 30 40]}
+           :weekly-trend (weekly-trend [11 12 0 0 20 30 40])}
           {:date "2020-06-26" :location "a" :new_cases 30
-           :trend [11 12 0 0 20 30]}]
+           :weekly-trend (weekly-trend [11 12 0 0 20 30])}]
          (select-latest-valid-data-per-country
            [{:date "2020-06-20" :location "b" :new_cases 10}
             {:date "2020-06-21" :location "b" :new_cases 11}
@@ -180,3 +180,19 @@
          (trend [0 0 1 1 0] {:new_cases 0})))
   (is (= [0 0 1 1]
          (trend [0 0 1 1 0] {:new_cases 1}))))
+
+
+(deftest weekly-trend-test
+  (is (= []
+         (weekly-trend [0])))
+
+  (is (= [10]
+         (weekly-trend [1 0 0 0 0 0 9])))
+
+  ; take weekly data and cut insufficient data
+  (is (= [10]
+         (weekly-trend [100 1 0 0 0 0 0 9])))
+
+  (is (= [10 20]
+         (weekly-trend [1 0 0 0 0 0 9
+                        2 0 0 0 0 0 18]))))

@@ -11,7 +11,9 @@
                        :population))
 (def double-columns [:total_cases_per_million :new_cases_per_million
                      :total_cases :new_cases :population])
-(def trend-size 100)
+
+;; 8 weeks and 36 weeks
+(def weekly-trend-size 36)
 
 
 (defn read-csv-as-maps [in-path]
@@ -84,8 +86,17 @@
 (defn trend [new-cases-bucket prev]
   (->>
     (numerify new-cases-bucket)
-    (#(if (zero? (:new_cases prev)) % (remove-trailing-zeros %)))
-    (take-last trend-size)))
+    (#(if (zero? (:new_cases prev)) % (remove-trailing-zeros %)))))
+
+
+(defn weekly-trend [trend-data]
+  "take weekly sum data"
+  (->> trend-data
+       reverse
+       (partition 7)
+       (map #(reduce + %))
+       reverse
+       (take-last weekly-trend-size)))
 
 
 (defn select-latest-valid-data-of-country
@@ -96,7 +107,8 @@
          new-cases-bucket []
          rows (rest table)]
     (if (empty? rows)
-      (merge prev {:trend (trend new-cases-bucket prev)})
+      (let [trend-data (trend new-cases-bucket prev)]
+        (merge prev {:weekly-trend (weekly-trend trend-data)}))
 
       (let [latest (first rows)
             rest-rows (rest rows)
