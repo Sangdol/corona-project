@@ -121,8 +121,29 @@ function chartSorter(a, b, aRow, bRow, column, dir, sorterParams) {
   return rangeSum(a) - rangeSum(b);
 }
 
-const trendShortWeekSize = 8;
-const trendLongWeekSize = tabledata['weekly-trend-size'];
+/**
+ * @param {string} date e.g., 2020-01-01
+ * @param {integer} weeks
+ */
+function dateMinusWeeks(date, weeks) {
+  const d = new Date(date);
+  d.setDate(d.getDate() - (weeks * 7));
+  return d;
+}
+
+const shortTrendWeekSize = 8;
+const longTrendWeekSize = tabledata['weekly-trend-size'];
+
+const shortTrendStartDate = formatDateShort(
+  dateMinusWeeks(tabledata.date, shortTrendWeekSize));
+const longTrendStartDate = formatDateShort(
+  dateMinusWeeks(tabledata.date, longTrendWeekSize));
+
+const shortTrendStartDateTag =
+`<span class="sub-text">from ${shortTrendStartDate}</span>`;
+
+const longTrendStartDateTag =
+`<span class="sub-text">from ${longTrendStartDate}</span>`;
 
 const tableTrend = new Tabulator("#table-trend", {
     selectable: false,
@@ -140,24 +161,24 @@ const tableTrend = new Tabulator("#table-trend", {
           resizable: false
         },
         {
-          title: `${trendShortWeekSize} Weeks`,
+          title: `${shortTrendWeekSize} Weeks<br>${shortTrendStartDateTag}`,
           titleFormatter: "html",
           field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(trendShortWeekSize),
+          formatter: trendFormatter(shortTrendWeekSize),
           sorter: chartSorter,
-          sorterParams: {range:trendShortWeekSize},
+          sorterParams: {range:shortTrendWeekSize},
           resizable: false,
           headerSortStartingDir: "desc",
         },
         {
-          title: `${trendLongWeekSize} Weeks`,
+          title: `${longTrendWeekSize} Weeks<br>${longTrendStartDateTag}`,
           titleFormatter: "html",
           field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(trendLongWeekSize),
+          formatter: trendFormatter(longTrendWeekSize),
           sorter: chartSorter,
-          sorterParams: {range:trendLongWeekSize},
+          sorterParams: {range:longTrendWeekSize},
           resizable: false,
           headerSortStartingDir: "desc",
         },
