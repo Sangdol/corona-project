@@ -183,7 +183,7 @@
 
 
 (deftest weekly-trend-test
-  (is (= []
+  (is (= nil
          (weekly-trend [0])))
 
   (is (= [10]
