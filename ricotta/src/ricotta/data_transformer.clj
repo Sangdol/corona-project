@@ -12,7 +12,6 @@
 (def double-columns [:total_cases_per_million :new_cases_per_million
                      :total_cases :new_cases :population])
 
-;; 8 weeks and 36 weeks
 (def weekly-trend-size 36)
 
 
@@ -129,8 +128,9 @@
     (map select-latest-valid-data-of-country)))
 
 
-(defn create-data-with-timestamp [countries]
+(defn create-data-with-metadata [countries]
   {:countries countries
+   :weekly-trend-size weekly-trend-size
    :date      (->
                 (map :date countries)
                 sort
@@ -161,7 +161,7 @@
       (select-europe)
       (cast-columns double-columns string->double)
       (select-latest-valid-data-per-country)
-      (create-data-with-timestamp)
+      (create-data-with-metadata)
       (write-as-json out-path)
       (generate-message out-path)
       (println)))

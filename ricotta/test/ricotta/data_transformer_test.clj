@@ -157,9 +157,10 @@
 
 (deftest create-data-with-timestamp-test
   (is (= {:date "2020-07-06"
+          :weekly-trend-size weekly-trend-size
           :countries
                 [{:date "2020-07-05"} {:date "2020-07-06"}]}
-         (create-data-with-timestamp
+         (create-data-with-metadata
            [{:date "2020-07-05"} {:date "2020-07-06"}]))))
 
 

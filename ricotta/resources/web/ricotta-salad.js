@@ -3,6 +3,7 @@ function addCommas(n) {
   return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
 }
 
+// tabledata is from ricotta-milk.js
 tabledata.countries.forEach((country) => {
   if (country.date == tabledata.date) {
     country.name_and_date = country.location;
@@ -120,12 +121,15 @@ function chartSorter(a, b, aRow, bRow, column, dir, sorterParams) {
   return rangeSum(a) - rangeSum(b);
 }
 
+const trendShortWeekSize = 8;
+const trendLongWeekSize = tabledata['weekly-trend-size'];
+
 const tableTrend = new Tabulator("#table-trend", {
     selectable: false,
     data: tabledata.countries,
     layout: "fitColumns",
     initialSort:[
-        {column:"trend", dir:"desc"},
+        {column:"weekly-trend", dir:"desc"},
     ],
     columns: [
         {
@@ -136,24 +140,24 @@ const tableTrend = new Tabulator("#table-trend", {
           resizable: false
         },
         {
-          title: `8 weeks`,
+          title: `${trendShortWeekSize} Weeks`,
           titleFormatter: "html",
           field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(8),
+          formatter: trendFormatter(trendShortWeekSize),
           sorter: chartSorter,
-          sorterParams: {range:30},
+          sorterParams: {range:trendShortWeekSize},
           resizable: false,
           headerSortStartingDir: "desc",
         },
         {
-          title: `36 weeks`,
+          title: `${trendLongWeekSize} Weeks`,
           titleFormatter: "html",
           field: "weekly-trend",
           widthGrow: 5,
-          formatter: trendFormatter(36),
+          formatter: trendFormatter(trendLongWeekSize),
           sorter: chartSorter,
-          sorterParams: {range:90},
+          sorterParams: {range:trendLongWeekSize},
           resizable: false,
           headerSortStartingDir: "desc",
         },
