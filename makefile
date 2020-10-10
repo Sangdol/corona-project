@@ -3,8 +3,6 @@
 #
 # local
 #
-local-server:
-	cd ricotta/resources/web && serve 3000
 
 test:
 	cd ricotta && lein test-refresh
