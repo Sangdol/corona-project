@@ -135,9 +135,9 @@ const shortTrendWeekSize = 8;
 const longTrendWeekSize = tabledata['weekly-trend-size'];
 
 const shortTrendStartDate = formatDateShort(
-  dateMinusWeeks(tabledata.date, shortTrendWeekSize));
+  dateMinusWeeks(tabledata.date, shortTrendWeekSize), 'short');
 const longTrendStartDate = formatDateShort(
-  dateMinusWeeks(tabledata.date, longTrendWeekSize));
+  dateMinusWeeks(tabledata.date, longTrendWeekSize), 'short');
 
 const shortTrendStartDateTag =
 `<span class="sub-text">from ${shortTrendStartDate}</span>`;
@@ -185,9 +185,9 @@ const tableTrend = new Tabulator("#table-trend", {
     ],
 });
 
-function formatDateShort(dateStr) {
+function formatDateShort(dateStr, monthFormat='long') {
   const date = new Date(dateStr);
-  const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: 'long', day: '2-digit' });
+  const dateTimeFormat = new Intl.DateTimeFormat('en', { year: 'numeric', month: monthFormat, day: '2-digit' });
   const [{ value: month },,{ value: day },,{ value: year }] = dateTimeFormat .formatToParts(date);
 
   return `${month} ${day}`;
