@@ -83,9 +83,18 @@
 
 
 (defn trend [new-cases-bucket prev]
+  "This will remove trailing 0s based on the `prev` value.
+   The logic is dependent on the select-latest-valid-data-of-country function"
+  ;; what does this function do?
+  ;;   the new_cases of prev will be only 0 when it's a valid 0 (see is-valid)
+  ;;   otherwise `prev` won't be updated, in turn, the trailing 0s can be considered
+  ;;   as not-valid values. WTF, who wrote this code?
   (->>
     (numerify new-cases-bucket)
-    (#(if (zero? (:new_cases prev)) % (remove-trailing-zeros %)))))
+    (#(if (or (not (number? (:new_cases prev)))
+              (zero? (:new_cases prev)))
+        %
+        (remove-trailing-zeros %)))))
 
 
 (defn weekly-trend [trend-data]
@@ -102,6 +111,8 @@
   "Select latest valid data of one country data.
    A number in a row of the table can be an empty string."
   [table]
+  ;; when does this loop stop?
+  ;;   when `rows` is empty.
   (loop [prev (first table)
          new-cases-bucket []
          rows (rest table)]

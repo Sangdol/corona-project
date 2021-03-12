@@ -178,7 +178,7 @@
 
 (deftest trend-test
   (is (= [0 0 1 1 0]
-         (trend [0 0 1 1 0] {:new_cases 0})))
+         ( [0 0 1 1 0] {:new_cases 0})))
   (is (= [0 0 1 1]
          (trend [0 0 1 1 0] {:new_cases 1}))))
 

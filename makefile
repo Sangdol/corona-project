@@ -16,6 +16,9 @@ ui:
 auto-ui:
 	cd ricotta && lein auto run ui local
 
+ready:
+	git push origin master:deploy
+
 #
 # prod
 #
