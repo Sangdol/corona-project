@@ -52,6 +52,7 @@ generate-parmesan:
 	cp -r ricotta/resources/web/* ../parmesan
 	echo "Parmesan generated"
 
+# TODO if there's a change in the origin this will fail.
 commit-push-parmesan:
 	cd ../parmesan && \
 		git add . && \
