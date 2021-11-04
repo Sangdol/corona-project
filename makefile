@@ -53,8 +53,12 @@ generate-parmesan:
 	echo "Parmesan generated"
 
 # TODO if there's a change in the origin this will fail.
+#
+# "git update-index --refresh" not to detect changes of the same file
+# https://stackoverflow.com/questions/34807971/why-does-git-diff-index-head-result-change-for-touched-files-after-git-diff-or-g
 commit-push-parmesan:
 	cd ../parmesan && \
+		git update-index --refresh && \
 		git diff-index --quiet HEAD || \
 			(git add . && \
 			git commit -m "publish" && \
