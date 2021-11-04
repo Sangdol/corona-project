@@ -55,6 +55,7 @@ generate-parmesan:
 # TODO if there's a change in the origin this will fail.
 commit-push-parmesan:
 	cd ../parmesan && \
+		git diff-index --quiet HEAD || \
 		git add . && \
 		git commit -m "publish" && \
 		git push && \
