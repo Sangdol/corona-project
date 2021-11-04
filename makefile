@@ -23,10 +23,10 @@ ready:
 # prod
 #
 
-fe-deploy: pull-ricotta run-ricotta generate-parmesan commit-push-parmesan clean-up
+fe-deploy: pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
 	echo "Front-end deployed"
 
-deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan clean-up
+deploy: prod-init download-csv pull-ricotta run-ricotta generate-parmesan commit-push-parmesan
 	echo "Deployed"
 
 prod-init:
