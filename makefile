@@ -56,10 +56,10 @@ generate-parmesan:
 commit-push-parmesan:
 	cd ../parmesan && \
 		git diff-index --quiet HEAD || \
-		git add . && \
-		git commit -m "publish" && \
-		git push && \
-		echo "Parmesan pushed"
+			(git add . && \
+			git commit -m "publish" && \
+			git push && \
+			echo "Parmesan pushed")
 
 clean-up:
 	# come back to master from deploy
