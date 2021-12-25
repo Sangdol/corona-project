@@ -8,7 +8,7 @@ if [ ! -e "$ETAG_FILANAME" ]; then
     touch "$ETAG_FILANAME"
 fi
 
-etag=$(curl -s -I https://covid.ourworldindata.org/data/owid-covid-data.csv | grep etag)
+etag=$(curl --compressed -s -I https://covid.ourworldindata.org/data/owid-covid-data.csv | grep etag)
 current_etag=$(cd "$PROJECT_PATH"  && cat "$ETAG_FILANAME")
 
 if [[ "$etag" == "$current_etag" ]]; then
